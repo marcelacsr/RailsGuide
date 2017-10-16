@@ -1,0 +1,43 @@
+<!--< %= form_with scope: :article, url: articles_path, local: true do |form| %>-->
+<!--Passing in a symbol scope (scope: :article) just creates the fields
+ but without anything filled into them.-->
+<%= form_with(model: @article) do |form| %>
+    <!--The arguments to form_with could be model objects, say, model:
+    @article which would cause the helper to fill in the form with the
+    fields of the object.-->
+
+    <!--  You need to tell the user that something went wrong. -->
+    <% if @article.errors.any? %>
+        <!--check if there are any errors with @article.errors.any? -->
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@article.errors.count, "error") %> prohibited
+            this article from being saved:
+            <!--pluralize is a rails helper that takes a number and a string
+            as its arguments. If the number is greater than one, the string
+            will be automatically pluralized.-->
+          </h2>
+          <ul>
+            <% @article.errors.full_messages.each do |msg| %>
+                <!--show a list of all errors with @article.errors.full_messages-->
+                <!--De onde vem essas msgs? do validates do model?-->
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <p>
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+    </p>
+    <p>
+      <%= form.label :text %><br>
+      <%= form.text_area :text %>
+    </p>
+    <p>
+      <%= form.submit %>
+      <!--PATCH  /articles/:id(.:format)      articles#update-->
+      <!--Caso seja para criar um novo artigo:-->
+      <!--.submit chama o create do controller    /articles/new   POST-->
+    </p>
+<% end %>

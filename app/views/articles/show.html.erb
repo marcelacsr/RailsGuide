@@ -1,0 +1,32 @@
+<!--/articles/:id      GET-->
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @article.text %>
+</p>
+
+<h2>Add a comment:</h2>
+<%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
+    <!--The form_with call here uses an array, which will build a nested route,
+    such as /articles/1/comments.-->
+    <p>
+      <%= form.label :commenter %><br>
+      <%= form.text_field :commenter %>
+    </p>
+    <p>
+      <%= form.label :body %><br>
+      <%= form.text_area :body %>
+    </p>
+    <p>
+      <%= form.submit %>
+      <!--PATCH  /articles/:article_id/comments/:id(.:format)      comments#update-->
+    </p>
+<% end %>
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
+<!--article_path == /article/:id   show do articles_controller-->

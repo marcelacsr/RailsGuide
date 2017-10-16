@@ -1,0 +1,29 @@
+<!--articles GET    /articles(.:format)          articles#index-->
+<h1>Listing articles</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="2"></th>
+  </tr>
+
+  <% @articles.each do |article| %>
+      <tr>
+        <td><%= article.title %></td>
+        <td><%= article.text %></td>
+        <td><%= link_to 'Show', article_path(article) %></td>
+        <!--article GET    /articles/:id(.:format)      articles#show-->
+        <!--article_path == /article/:id   show do articles_controller-->
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <!--edit_article GET    /articles/:id/edit(.:format) articles#edit-->
+        <td><%= link_to 'Destroy', article_path(article),
+                        method: :delete,
+                        data: {confirm: 'Are you sure?'} %></td>
+        <!--DELETE /articles/:id(.:format)      articles#destroy-->
+      </tr>
+  <% end %>
+</table>
+<%= link_to 'New article', new_article_path %>
+<!--new_article_path == /article/new new do articles_controller-->
+
